@@ -1,12 +1,13 @@
 from bs4 import BeautifulSoup
+from bs4.element import ContentMetaAttributeValue
 import requests
 
 
-class Stock:
+class Article:
     # 建構式
-    def __init__(self, *stock_numbers):
-        self.stock_numbers = stock_numbers
-        print(self.stock_numbers)
+    def __init__(self, *article_numbers):
+        self.article_numbers = article_numbers
+        print(self.article_numbers)
 
     # 爬取
 
@@ -14,24 +15,30 @@ class Stock:
 
         result = list()
 
-        for stock_number in self.stock_numbers:
+        for article_number in self.article_numbers:
 
             response = requests.get(
-                "https://tw.stock.yahoo.com/q/q?s=" + stock_number
+                "https://www.edh.tw/article/" + article_number
             )
-            soup = BeautifulSoup(response.text.replace("加到投資組合", ""), "lxml")
+            soup = BeautifulSoup(response.text, "lxml")
 
-            stock_date = soup.find(
-                "font", {"class": "tt"}).getText().strip()[-9:]  # 資料日期
+            artilcle_title = soup.find(
+                "meta", {"itemprop": "headline"}
+            ).get_attribute_list("content")  # 取得標題
 
-            tables = soup.find_all("table")[2]  # 取得網頁中第三個表格(索引從0開始)
-            tds = tables.find_all("td")[0:11]  # 取得表格中1到10格
+            article_date = soup.find(
+                "meta", {"itemprop": "datePublished"}
+            ).get_attribute_list("content")  # 取得資料日期
+
+            article_views = soup.find(
+                "span", {"class": "number"}
+            ).getText().strip()[:+12]  # 取得瀏覽數
 
             result.append(
-                (stock_date,) + tuple(td.getText().strip() for td in tds)
+                str(artilcle_title,) + str(article_date,) + str(article_views)
             )
         return result
 
 
-stock = Stock("2451", "2454")  # 建立stock物件
-print(stock.scrape())  # 印出爬取結果
+article = Article("28575")  # 建立article物件
+print(article.scrape())  # 印出爬取結果
