@@ -1,5 +1,4 @@
 from bs4 import BeautifulSoup
-from bs4.element import ContentMetaAttributeValue
 import requests
 
 
@@ -32,7 +31,7 @@ class Article:
 
             article_views = soup.find(
                 "span", {"class": "number"}
-            ).getText().strip()[:+12]  # 取得瀏覽數
+            ).getText().strip()  # 取得瀏覽數
 
             result.append(
                 str(artilcle_title,) + str(article_date,) + str(article_views)
