@@ -9,7 +9,7 @@ headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.61 Safari/537.36'
 }
 result = []
-for article_id in range(29000, 29500):
+for article_id in range(29500, 30000):
     url = f'https://www.edh.tw/article/{article_id}'
     r = requests.get(url)
     soup = BeautifulSoup(r.text, 'lxml')
