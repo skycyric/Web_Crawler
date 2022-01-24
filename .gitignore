@@ -1,0 +1,8 @@
+#system file
+/etc
+/Lib
+/Scripts
+/share
+
+#data file
+/YT_CSV 
