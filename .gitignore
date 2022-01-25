@@ -1,6 +1,8 @@
-# created by virtualenv automatically
-/etc/
-/Lib/
-/Scripts/
-/share/
-/YT_CSV/
+#system file
+/etc
+/Lib
+/Scripts
+/share
+
+#data file
+/YT_CSV 
